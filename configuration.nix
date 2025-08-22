@@ -52,7 +52,8 @@
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-
+  programs.hyprland.enable = true;
+  
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "it";
@@ -103,11 +104,8 @@
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     curl
-    kitty
   ];
   # Hyprland configuration 
-  programs.hyprland.enable = true; # enable Hyprland
-  programs.hyprland.xwayland.enable = true;
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Some programs need SUID wrappers, can be configured further or are

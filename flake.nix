@@ -18,20 +18,13 @@
         modules = [
           ./configuration.nix
           ./hardware-configuration.nix
-          
-          # Integra Home Manager
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.aa = import ./home.nix;
-            
-            # Opzionale: passa variabili extra a home-manager
-            home-manager.extraSpecialArgs = {
-              dotfiles = self;  # permette di referenziare i dotfiles
-            };
-          }
         ];
+      };
+    };
+    homeConfigurations = {
+      aa = home-manager.lib.homeManagerConfiguration {
+        pkgs =  nixpkgs.legacyPackages."x86_64-linux";
+        modules = [./home.nix];
       };
     };
   };

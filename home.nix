@@ -26,8 +26,8 @@
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
+    pkgs.nerd-fonts.agave
+    pkgs.nerd-fonts.jetbrains-mono
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
     # # environment:
@@ -69,30 +69,13 @@
   #
   home.sessionVariables = {
     # EDITOR = "emacs";
+    NIXOS_OZONE_WL = "1"; # Fix Electron problems with Hyprland
   };
-  
-  # Waybar con config dai dotfiles
-  programs.waybar = {
-    enable = true;
-    # Se hai file di config separati:
-    #settings = builtins.fromJSON (builtins.readFile ../config/waybar/config);
-    #style = builtins.readFile ./waybar-style.css;
-    
-    # Oppure inline come prima:
-    settings = {
-      mainBar = {
-        layer = "top";
-        height = 30;
-        position = "top";
-        modules-left = [ "hyprland/workspaces" "hyprland/mode" "wlr/taskbar" ];
-        "hyprland/workspaces" = {
-          disable-scroll = true;
-          all-outputs = true;
-        };
-        # ... tua config ...
-      };
-    };
-  };
+
+  imports = [
+    ./GUI/hyprland.nix
+    ./GUI/waybar.nix
+  ];
 
   programs.git = {
     enable = true;  # ← installa git automaticamente
@@ -110,7 +93,25 @@
     };
   };
 
+  fonts.fontconfig.enable = true;
+
+  programs.kitty = {
+    enable = true;
+    font = {
+      name = "Agave Nerd Font Mono"; # Use the exact font name from the installed package
+      size = 13; # Adjust size as needed
+    };
+    settings = {
+    #  font_family = "Agave Nerd Font Mono";
+    #  bold_font = "Agave Nerd Font Mono Bold";
+    #  italic_font = "Agave Nerd Font Mono Italic";
+    #  bold_italic_font = "Agave Nerd Font Mono Bold Italic";
+       window_padding_width = 8;
+    };
+  };
+
   programs.firefox.enable = true;
+  programs.chromium.enable = true;
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
