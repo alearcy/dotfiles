@@ -1,0 +1,11 @@
+* AA NIXOS setup
+Questo e un setup personale per caricare tutto l'ambiente di lavoro basato su NixOS ed Emacs.
+Tutto e' configurato grazie a home-manager che si occupa di creare tutti i dotfiles e i temi della sessione utente.
+L'unica differenza e' l'init.el di Emacs che va copiato e incollato nella cartella ./emacs.d. La prima volta che si avviera' Emacs, tutto verra' installato automaticamente.
+
+
+* TODO
+[] Variabili d'ambiente
+[] nix-shell per linguaggi di programmazione
+[] LSP
+[] test su Emacs se tutto funziona
