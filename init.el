@@ -99,6 +99,7 @@
   :straight t
   :config
   (load-theme 'doom-gruvbox-light t))
+  (setq doom-gruvbox-light-variant "hard")
 
 ;;; EMACS
 ;;  This is biggest one. Keep going, plugins (oops, I mean packages) will be shorter :)
