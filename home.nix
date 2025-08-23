@@ -112,7 +112,7 @@
   
   stylix.enable = true;
   stylix.image = ./wallpaper.jpg;
-  stylix.polarity = "dark";
+  stylix.polarity = "light";
   stylix.fonts = {
     serif = {
       package = pkgs.dejavu_fonts;

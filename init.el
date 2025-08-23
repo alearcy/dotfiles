@@ -101,6 +101,11 @@
   (load-theme 'doom-gruvbox-light t))
   (setq doom-gruvbox-light-variant "hard")
 
+(use-package nix-mode
+  :ensure t
+  :straight t
+  :mode "\\.nix\\'")
+
 ;;; EMACS
 ;;  This is biggest one. Keep going, plugins (oops, I mean packages) will be shorter :)
 (use-package emacs
