@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, themeMode, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -28,6 +28,7 @@
     # # fonts?
     pkgs.nerd-fonts.agave
     pkgs.nerd-fonts.jetbrains-mono
+    pkgs.kitty-themes
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
     # # environment:
@@ -68,7 +69,7 @@
   #  /etc/profiles/per-user/aa/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "emacs";
     NIXOS_OZONE_WL = "1"; # Fix Electron problems with Hyprland
   };
 
@@ -78,7 +79,7 @@
   ];
 
   programs.git = {
-    enable = true;  # ← installa git automaticamente
+    enable = true;
     userName = "alearcy";
     userEmail = "arcidiaco.a@gmail.com";
   };
@@ -88,7 +89,7 @@
     shellAliases.ll = "ls -la";
     oh-my-zsh = {
       enable = true;
-      plugins = [];
+      plugins = ["git" "git-flow"];
       theme = "agnoster";
     };
   };
@@ -98,20 +99,51 @@
   programs.kitty = {
     enable = true;
     font = {
-      name = "Agave Nerd Font Mono"; # Use the exact font name from the installed package
-      size = 13; # Adjust size as needed
+      name = lib.mkDefault "Agave Nerd Font Mono";
+      size = lib.mkDefault 13;
     };
     settings = {
-    #  font_family = "Agave Nerd Font Mono";
-    #  bold_font = "Agave Nerd Font Mono Bold";
-    #  italic_font = "Agave Nerd Font Mono Italic";
-    #  bold_italic_font = "Agave Nerd Font Mono Bold Italic";
        window_padding_width = 8;
     };
+    # Per un elenco completo: 
+    # ls /nix/store/i9nddlyn2hfr48z7hrs8kkkhd5nhd2qb-kitty-themes-0-unstable-2024-08-14/share/kitty-themes/themes
+    themeFile = "GruvboxMaterialLightHard";
+  };
+  
+  stylix.enable = true;
+  stylix.image = ./wallpaper.jpg;
+  stylix.polarity = "dark";
+  stylix.fonts = {
+    serif = {
+      package = pkgs.dejavu_fonts;
+      name = "DejaVu Serif";
+    };
+
+    sansSerif = {
+      package = pkgs.dejavu_fonts;
+      name = "DejaVu Sans";
+    };
+
+    monospace = {
+      package = pkgs.nerd-fonts.agave;
+      name = "Agave Nerd Font Mono";
+    };
+
+    emoji = {
+      package = pkgs.noto-fonts-emoji;
+      name = "Noto Color Emoji";
+    };
+  };
+  stylix.targets = {
+    waybar.enable = false;
+    kitty.enable = false;
+    emacs.enable = false;
   };
 
   programs.firefox.enable = true;
   programs.chromium.enable = true;
+  programs.emacs.enable = true;
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }

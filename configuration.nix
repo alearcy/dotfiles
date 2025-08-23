@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports =
@@ -53,7 +53,8 @@
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-  programs.hyprland.enable = true;
+  services.xserver.displayManager.sessionPackages = [config.programs.hyprland.package];
+  #programs.hyprland.enable = true;
   
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -106,6 +107,7 @@
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     curl
+    inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
   ];
   # Hyprland configuration 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";

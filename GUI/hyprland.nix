@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   # Abilita il modulo di Hyprland in Home Manager
@@ -20,6 +20,7 @@
       env = [
         "XCURSOR_SIZE,24"
         "HYPRCURSOR_SIZE,24"
+        "HYPRCURSOR_THEME,rose-pine-hyprcursor"
       ];
 
       # Programmi da avviare all'avvio
@@ -32,8 +33,8 @@
         gaps_in = 5;
         gaps_out = 20;
         border_size = 2;
-        "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-        "col.inactive_border" = "rgba(595959aa)";
+        "col.active_border" = lib.mkDefault "rgba(33ccffee) rgba(00ff99ee) 45deg";
+        "col.inactive_border" = lib.mkDefault "rgba(595959aa)";
         resize_on_border = false;
         allow_tearing = false;
         layout = "dwindle";
@@ -50,7 +51,7 @@
           enabled = true;
           range = 4;
           render_power = 3;
-          color = "rgba(1a1a1aee)";
+          color = lib.mkDefault "rgba(1a1a1aee)";
         };
 
         blur = {
@@ -105,7 +106,7 @@
       # Varie (misc)
       misc = {
         force_default_wallpaper = -1;
-        disable_hyprland_logo = false;
+        disable_hyprland_logo = lib.mkDefault false;
       };
 
       # Input
@@ -135,6 +136,7 @@
         "$mainMod, X, exit,"
         "$mainMod, D, exec, nautilus"
         "$mainMod, C, exec, chromium"
+        "$mainMod, E, exec, emacs"
         "$mainMod, V, togglefloating,"
         "$mainMod, R, exec, wofi --show drun"
         "$mainMod, P, pseudo,"
