@@ -90,7 +90,7 @@
     oh-my-zsh = {
       enable = true;
       plugins = ["git" "git-flow"];
-      theme = "agnoster";
+      #theme = "agnoster"; il tema e' gestito da stylix
     };
   };
 
@@ -107,11 +107,12 @@
     };
     # Per un elenco completo: 
     # ls /nix/store/i9nddlyn2hfr48z7hrs8kkkhd5nhd2qb-kitty-themes-0-unstable-2024-08-14/share/kitty-themes/themes
-    themeFile = "GruvboxMaterialLightHard";
+    # themeFile = "GruvboxMaterialLightHard";
+    themeFile = "Solarized_Light";
   };
   
   stylix.enable = true;
-  stylix.image = ./wallpaper.jpg;
+  stylix.image = ./GUI/wallpaper.jpg;
   stylix.polarity = "light";
   stylix.fonts = {
     serif = {

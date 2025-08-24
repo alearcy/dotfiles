@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t -*-
+(setq-default lexical-binding t)
 ;; AA Emacs config
 
 ;; Performance Hacks
@@ -98,13 +100,7 @@
   :ensure t
   :straight t
   :config
-  (load-theme 'doom-gruvbox-light t))
-  (setq doom-gruvbox-light-variant "hard")
-
-(use-package nix-mode
-  :ensure t
-  :straight t
-  :mode "\\.nix\\'")
+  (load-theme 'doom-solarized-light t))
 
 ;;; EMACS
 ;;  This is biggest one. Keep going, plugins (oops, I mean packages) will be shorter :)
@@ -392,9 +388,7 @@
 ;; it's explicitly needed, which can help speed up Emacs startup time.
 (use-package org
   :ensure nil     ;; This is built-in, no need to fetch it.
-  :defer t
-  :hook ((org-mode . visual-line-mode))
-  )
+  :defer t)       ;; Defer loading Org-mode until it's needed.
 
 
 ;;; WHICH-KEY
@@ -662,6 +656,17 @@
   ;; Semantic settings
   (lsp-semantic-tokens-enable nil))                     ;; Disable semantic tokens.
 
+;; Nix language LSP
+(use-package lsp-nix
+  :ensure lsp-mode
+  :after (lsp-mode)
+  :demand t
+  :custom
+  (lsp-nix-nil-formatter ["nixfmt"]))
+
+(use-package nix-mode
+  :hook (nix-mode . lsp-deferred)
+  :ensure t)
 
 ;;; LSP Additional Servers
 ;; You can extend `lsp-mode' by integrating additional language servers for specific

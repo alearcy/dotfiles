@@ -19,26 +19,19 @@
   };
 
   outputs = { self, nixpkgs, home-manager, stylix, ... } @inputs: {
-    nixosConfigurations = {
-      # Sostituisci con: hostname
-      nixos = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         system = "x86_64-linux";
         modules = [
           ./configuration.nix
-          ./hardware-configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.aa = ./home.nix;
+            home-manager.sharedModules = [ stylix.homeModules.stylix ];
+          }
         ];
-      };
-    };
-    homeConfigurations = {
-      aa = home-manager.lib.homeManagerConfiguration {
-        pkgs =  nixpkgs.legacyPackages."x86_64-linux";
-        modules = [
-          ./home.nix 
-          stylix.homeModules.stylix
-        ];
-      };
     };
   };
 }
-#

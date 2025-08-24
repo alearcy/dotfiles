@@ -13,7 +13,6 @@
   # Abilita flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -53,7 +52,7 @@
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-  services.xserver.displayManager.sessionPackages = [config.programs.hyprland.package];
+  services.displayManager.sessionPackages = [config.programs.hyprland.package];
   #programs.hyprland.enable = true;
   
   # Configure keymap in X11
@@ -108,6 +107,10 @@
     wget
     curl
     inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
+    bat
+    nil # nix lsp
+    gopls
+    rust-analyzer
   ];
   # Hyprland configuration 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
