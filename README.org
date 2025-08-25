@@ -5,15 +5,18 @@ L'unica differenza e' l'init.el di Emacs che va copiato e incollato nella cartel
 
 
 * TODO
-[] Variabili d'ambiente
-[] nix-shell per linguaggi di programmazione
-[] LSP
+[x] Scripts (rebuild, update ecc...)
+[] nix-shell per linguaggi di programmazione ?
+[x] LSP
 [x] test su Emacs se tutto funziona
 [x] spostare hardware etc in home
-[] abilitare modus anche su kitty oppure lasciare solarized light
+[x] abilitare modus anche su kitty oppure lasciare solarized light
 [] allargare finestra neotree
-[] nix-mode non parte in automatico 
+[x] nix-mode non parte in automatico 
 [] doom bar padding 4px lati
-[] emacs padding top
+[x] emacs padding top
 [] shell su emacs
 [x] home inglobata come system module
+[x] notifiche moko
+[x] menu con rofi
+[x] rimuovere tema preso da wallpaper

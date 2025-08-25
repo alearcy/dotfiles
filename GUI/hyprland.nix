@@ -26,6 +26,7 @@
       # Programmi da avviare all'avvio
       exec-once = [
         "waybar"
+        "mako" # sistema di notifiche
       ];
 
       # Impostazioni globali (general)
@@ -112,7 +113,7 @@
       # Input
       input = {
         kb_layout = "us";
-        kb_variant = "";
+        kb_variant = "intl";
         kb_model = "";
         kb_options = "altwin:swap_alt_win";
         kb_rules = "";
@@ -133,7 +134,7 @@
       bind = [
         "$mainMod, T, exec, kitty"
         "$mainMod, K, killactive,"
-        "$mainMod, X, exit,"
+        "$mainMod, Escape, exit,"
         "$mainMod, D, exec, nautilus"
         "$mainMod, C, exec, chromium"
         "$mainMod, E, exec, emacs"
@@ -184,6 +185,8 @@
         ",XF86AudioPause, exec, playerctl play-pause"
         ",XF86AudioPlay, exec, playerctl play-pause"
         ",XF86AudioPrev, exec, playerctl previous"
+        "$mainMod, Space, exec, rofi -show drun"
+        "$mainMod SHIFT, Space, exec, rofi -show filebrowser"
       ];
       
       # Regole per le finestre (windowrule)

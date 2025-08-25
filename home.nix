@@ -1,4 +1,4 @@
-{ config, pkgs, lib, themeMode, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -18,23 +18,12 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
-
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
     pkgs.nerd-fonts.agave
     pkgs.nerd-fonts.jetbrains-mono
     pkgs.kitty-themes
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+    pkgs.base16-schemes
+    # Shell scripts
+    (pkgs.writeShellScriptBin "aa" (builtins.readFile ./aa.sh) )
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -99,8 +88,8 @@
   programs.kitty = {
     enable = true;
     font = {
-      name = lib.mkDefault "Agave Nerd Font Mono";
-      size = lib.mkDefault 13;
+      name = lib.mkForce "Agave Nerd Font Mono";
+      size = lib.mkForce 13;
     };
     settings = {
        window_padding_width = 8;
@@ -108,11 +97,40 @@
     # Per un elenco completo: 
     # ls /nix/store/i9nddlyn2hfr48z7hrs8kkkhd5nhd2qb-kitty-themes-0-unstable-2024-08-14/share/kitty-themes/themes
     # themeFile = "GruvboxMaterialLightHard";
-    themeFile = "Solarized_Light";
+    #themeFile = "Solarized_Light";
+  };
+
+  # Notifiche di sistema
+  services.mako = {
+    enable = true;
+    width = 350;
+    height = 120;
+    margin = "20";
+    padding = "15";
+    defaultTimeout = 8000;
+    groupBy = "summary";
+    sort = "-time";
+  };
+
+  # App launcher
+  programs.rofi = {
+    enable = true;
+    package = pkgs.rofi-wayland;
+    font = lib.mkDefault "Inter 12";
+    extraConfig = {
+      modi = "drun,run,filebrowser";
+      show-icons = true;
+      display-drun = " Apps";
+      display-run = " Run";
+      display-filebrowser = " Files";
+      drun-display-format = "{name}";
+      run-display-format = "{name}";
+      filebrowser-display-format = "{name}";
+    };
   };
   
   stylix.enable = true;
-  stylix.image = ./GUI/wallpaper.jpg;
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/solarized-light.yaml";
   stylix.polarity = "light";
   stylix.fonts = {
     serif = {
@@ -137,7 +155,7 @@
   };
   stylix.targets = {
     waybar.enable = false;
-    kitty.enable = false;
+    #kitty.enable = false;
     emacs.enable = false;
   };
 
