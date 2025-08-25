@@ -41,22 +41,6 @@
     # '';
   };
 
-  # Home Manager can also manage your environment variables through
-  # 'home.sessionVariables'. These will be explicitly sourced when using a
-  # shell provided by Home Manager. If you don't want to manage your shell
-  # through Home Manager then you have to manually source 'hm-session-vars.sh'
-  # located at either
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/aa/etc/profile.d/hm-session-vars.sh
-  #
   home.sessionVariables = {
     EDITOR = "emacs";
     NIXOS_OZONE_WL = "1"; # Fix Electron problems with Hyprland
@@ -79,7 +63,7 @@
     oh-my-zsh = {
       enable = true;
       plugins = ["git" "git-flow"];
-      #theme = "agnoster"; il tema e' gestito da stylix
+      theme = "agnoster";
     };
   };
 
@@ -88,8 +72,8 @@
   programs.kitty = {
     enable = true;
     font = {
-      name = lib.mkForce "Agave Nerd Font Mono";
-      size = lib.mkForce 13;
+      name = "Agave Nerd Font Mono";
+      size = 13;
     };
     settings = {
        window_padding_width = 8;
@@ -97,7 +81,7 @@
     # Per un elenco completo: 
     # ls /nix/store/i9nddlyn2hfr48z7hrs8kkkhd5nhd2qb-kitty-themes-0-unstable-2024-08-14/share/kitty-themes/themes
     # themeFile = "GruvboxMaterialLightHard";
-    #themeFile = "Solarized_Light";
+    themeFile = "Solarized_Light";
   };
 
   # Notifiche di sistema
@@ -116,7 +100,7 @@
   programs.rofi = {
     enable = true;
     package = pkgs.rofi-wayland;
-    font = lib.mkDefault "Inter 12";
+    font = "Agave Nerd Font";
     extraConfig = {
       modi = "drun,run,filebrowser";
       show-icons = true;
@@ -127,36 +111,6 @@
       run-display-format = "{name}";
       filebrowser-display-format = "{name}";
     };
-  };
-  
-  stylix.enable = true;
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/solarized-light.yaml";
-  stylix.polarity = "light";
-  stylix.fonts = {
-    serif = {
-      package = pkgs.dejavu_fonts;
-      name = "DejaVu Serif";
-    };
-
-    sansSerif = {
-      package = pkgs.dejavu_fonts;
-      name = "DejaVu Sans";
-    };
-
-    monospace = {
-      package = pkgs.nerd-fonts.agave;
-      name = "Agave Nerd Font Mono";
-    };
-
-    emoji = {
-      package = pkgs.noto-fonts-emoji;
-      name = "Noto Color Emoji";
-    };
-  };
-  stylix.targets = {
-    waybar.enable = false;
-    #kitty.enable = false;
-    emacs.enable = false;
   };
 
   programs.firefox.enable = true;

@@ -11,7 +11,7 @@ L'unica differenza e' l'init.el di Emacs che va copiato e incollato nella cartel
 [x] test su Emacs se tutto funziona
 [x] spostare hardware etc in home
 [x] abilitare modus anche su kitty oppure lasciare solarized light
-[] allargare finestra neotree
+[x] allargare finestra neotree
 [x] nix-mode non parte in automatico 
 [] doom bar padding 4px lati
 [x] emacs padding top

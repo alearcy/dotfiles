@@ -15,7 +15,7 @@ USER="alearcy"
 
 # Funzione per mostrare l'help
 show_help() {
-  echo -e "${CYAN}🛠️  AA - System Configuration Tool${NC}"
+  echo -e "${CYAN}AA - System Configuration Tool${NC}"
   echo -e "${BLUE}Usage: aa [COMMAND]${NC}"
   echo ""
   echo -e "${YELLOW}Available commands:${NC}"
@@ -34,55 +34,55 @@ show_help() {
 # Funzione per verificare la directory del flake
 check_flake_dir() {
   if [ ! -d "$FLAKE_DIR" ]; then
-    echo -e "${RED}❌ Flake directory $FLAKE_DIR not found!${NC}"
+    echo -e "${RED}Flake directory $FLAKE_DIR not found!${NC}"
     exit 1
   fi
 }
 
 # Funzione per rebuild NixOS
 rebuild_nixos() {
-  echo -e "${BLUE}🔄 Rebuilding NixOS configuration...${NC}"
+  echo -e "${BLUE}Rebuilding NixOS configuration...${NC}"
   check_flake_dir
   cd "$FLAKE_DIR"
   
   if sudo nixos-rebuild switch --flake .; then
-    echo -e "${GREEN}✅ NixOS rebuild completed successfully!${NC}"
+    echo -e "${GREEN}NixOS rebuild completed successfully!${NC}"
   else
-    echo -e "${RED}❌ NixOS rebuild failed!${NC}"
+    echo -e "${RED}NixOS rebuild failed!${NC}"
     exit 1
   fi
 }
 
 # Funzione per update flake
 update_flake() {
-  echo -e "${BLUE}🔄 Updating flake inputs...${NC}"
+  echo -e "${BLUE}Updating flake inputs...${NC}"
   check_flake_dir
   cd "$FLAKE_DIR"
   
   if nix flake update; then
-    echo -e "${GREEN}✅ Flake update completed successfully!${NC}"
+    echo -e "${GREEN}Flake update completed successfully!${NC}"
   else
-    echo -e "${RED}❌ Flake update failed!${NC}"
+    echo -e "${RED}Flake update failed!${NC}"
     exit 1
   fi
 }
 
 # Funzione per cleanup
 cleanup_nix() {
-  echo -e "${BLUE}🧹 Cleaning up Nix store...${NC}"
+  echo -e "${BLUE}Cleaning up Nix store...${NC}"
   
-  echo -e "${YELLOW}🗑️  Running user garbage collection...${NC}"
+  echo -e "${YELLOW}Running user garbage collection...${NC}"
   if nix-collect-garbage -d; then
-    echo -e "${GREEN}✅ User cleanup completed!${NC}"
+    echo -e "${GREEN}User cleanup completed!${NC}"
   else
-    echo -e "${RED}❌ User cleanup failed!${NC}"
+    echo -e "${RED}User cleanup failed!${NC}"
   fi
   
-  echo -e "${YELLOW}🗑️  Running system garbage collection...${NC}"
+  echo -e "${YELLOW}Running system garbage collection...${NC}"
   if sudo nix-collect-garbage -d; then
-    echo -e "${GREEN}✅ System cleanup completed!${NC}"
+    echo -e "${GREEN}System cleanup completed!${NC}"
   else
-    echo -e "${RED}❌ System cleanup failed!${NC}"
+    echo -e "${RED}System cleanup failed!${NC}"
   fi
   
   echo -e "${BLUE}📊 Disk usage after cleanup:${NC}"
@@ -91,7 +91,7 @@ cleanup_nix() {
 
 # Funzione per full update
 full_update() {
-  echo -e "${PURPLE}🚀 Starting full system update...${NC}"
+  echo -e "${PURPLE}Starting full system update...${NC}"
   echo ""
   
   update_flake
@@ -103,7 +103,7 @@ full_update() {
   cleanup_nix
   echo ""
   
-  echo -e "${GREEN}🎉 Full system update completed successfully!${NC}"
+  echo -e "${GREEN}Full system update completed successfully!${NC}"
 }
 
 # Main logic
