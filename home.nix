@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -24,16 +24,37 @@
     base16-schemes
     gnome-screenshot
     pavucontrol
-    # Shell scripts
-    (writeShellScriptBin "aa" (builtins.readFile ./aa.sh) )
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
     # Emacs symlinks
-    ".emacs.d/init.el".source = ./init.el;
+    ".emacs.d" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/emacs.d";
+        recursive = true;
+    };
+    # aa NixOS scripts
+    ".local/bin" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/aa.sh";
+    };
   };
+
+  xdg.configFiles = {
+    "hypr" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr";
+      recursive = true;
+    };
+    "waybar" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/waybar";
+      recursive = true;
+   };
+   "kitty" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/kitty";
+      recursive = true;
+    }
+  };
+
 home.activation.createMutableThemeFiles = lib.hm.dag.entryAfter ["writeBoundary"] ''
     WAYBAR_STYLE="$HOME/.config/waybar/style.css"
     KITTY_STYLE="$HOME/.config/kitty/kitty.conf"  # Se il tuo script modifica anche kitty
@@ -98,7 +119,8 @@ home.activation.initTheme = lib.hm.dag.entryAfter ["createThemeState"] ''
 
   programs.zsh = {
     enable = true;
-    shellAliases.ll = "ls -la";
+    enableAutosuggestions = true;
+    enableCompletion = true;
     oh-my-zsh = {
       enable = true;
       plugins = ["git" "git-flow"];
@@ -106,6 +128,11 @@ home.activation.initTheme = lib.hm.dag.entryAfter ["createThemeState"] ''
     };
   };
 
+  programs.waybar = {
+    enable = true;
+    systemd.enable = true;
+  };
+  
   fonts.fontconfig.enable = true;
 
   # Notifiche di sistema
@@ -125,8 +152,8 @@ home.activation.initTheme = lib.hm.dag.entryAfter ["createThemeState"] ''
     enable = true;
     package = pkgs.rofi-wayland;
     font = "Agave Nerd Font 13";
-theme = let
-    inherit (config.lib.formats.rasi) mkLiteral;
+    theme = let
+      inherit (config.lib.formats.rasi) mkLiteral;
   in {
     "*" = {
       /* Solarized Light Colors with transparency */

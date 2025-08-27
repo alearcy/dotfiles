@@ -111,13 +111,13 @@
     nil # nix lsp
     gopls
     rust-analyzer
-    waybar
-    kitty
   ];
   # Hyprland configuration 
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-  programs.hyprland.enable = true;
-  programs.hyprland.xwayland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+  };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;

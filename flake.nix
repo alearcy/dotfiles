@@ -9,8 +9,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland = {
-	url = "github:hyprwm/Hyprland"; 
-	inputs.nixpkgs.follows = "nixpkgs";
+	    url = "github:hyprwm/Hyprland"; 
+	    inputs.nixpkgs.follows = "nixpkgs";
     };
     rose-pine-hyprcursor = {
       url = "github:ndom91/rose-pine-hyprcursor";
@@ -28,9 +28,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-	    home-manager.backupFileExtension = "backup";
             home-manager.users.aa = ./home.nix;
-            # home-manager.sharedModules = [ stylix.homeModules.stylix ]; leave as example
           }
         ];
     };
