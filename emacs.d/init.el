@@ -98,9 +98,7 @@
 ;; the desired features and improve our workflow.
 (use-package doom-themes
   :ensure t
-  :straight t
-  :config
-  (load-theme 'doom-solarized-light t))
+  :straight t)
 
 ;;; EMACS
 ;;  This is biggest one. Keep going, plugins (oops, I mean packages) will be shorter :)
@@ -160,11 +158,11 @@
     "Function for `switch-to-prev-buffer-skip'."
     (string-match "\\*[^*]+\\*" (buffer-name buffer)))
   (setq switch-to-prev-buffer-skip 'skip-these-buffers)
-  ;; (load-theme 'gruvbox-light-hard t)
-  ;; (setq modus-themes-common-palette-overrides
-  ;;      '((border-mode-line-active unspecified)
-  ;;        (border-mode-line-inactive unspecified)))
-  ;;(setq modus-themes-to-toggle '(gruvbox-light-hard gruvbox-dark-hard))
+    (load-theme 'modus_operandi_tinted t)
+    (setq modus-themes-common-palette-overrides
+        '((border-mode-line-active unspecified)
+          (border-mode-line-inactive unspecified)))
+  (setq modus-themes-to-toggle '(modus_operandi_tinted modus_vivendi_tinted))
 
   ;; Configure font settings based on the operating system.
   ;; Ok, this kickstart is meant to be used on the terminal, not on GUI.
