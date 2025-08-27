@@ -108,7 +108,6 @@
     vim
     wget
     curl
-    inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
     bat
     nil # nix lsp
     gopls
