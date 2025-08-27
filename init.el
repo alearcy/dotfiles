@@ -131,7 +131,22 @@
   (use-dialog-box nil)                            ;; Disable dialog boxes in favor of minibuffer prompts.
   (use-short-answers t)                           ;; Use short answers in prompts for quicker responses (y instead of yes)
   (warning-minimum-level :emergency)              ;; Set the minimum level of warnings to display.
+  ;; Window navigation
+  (global-set-key (kbd "C-M-<up>")    'windmove-up)
+  (global-set-key (kbd "C-M-<down>")  'windmove-down)
+  (global-set-key (kbd "C-M-<left>")  'windmove-left)
+  (global-set-key (kbd "C-M-<right>") 'windmove-right)
+  (defun duplicate-line ()
+	"Duplicate current line"
+	(interactive)
+	(let ((column (current-column)))
+      (move-beginning-of-line 1)
+      (kill-line 1)
+      (yank)
+      (yank)
+      (move-to-column column)))
 
+  (global-set-key (kbd "C-c d") 'duplicate-line)
 
 
   :hook                                           ;; Add hooks to enable specific features in certain modes.
@@ -183,6 +198,8 @@
   (xterm-mouse-mode 1)         ;; Enable mouse support in terminal mode.
   (file-name-shadow-mode 1)    ;; Enable shadowing of filenames for clarity.
   (scroll-bar-mode -1)
+  (setq-default header-line-format " ")
+  
 
   ;; Set the default coding system for files to UTF-8.
   (modify-coding-system-alist 'file "" 'utf-8)
@@ -903,7 +920,6 @@
   (doom-modeline-project-detection 'project)           ;; Enable project detection for displaying the project name.
   (doom-modeline-buffer-name t)                        ;; Show the buffer name in the mode line.
   (doom-modeline-vcs-max-length 25)                    ;; Limit the version control system (VCS) branch name length to 25 characters.
-
   (if ek-use-nerd-fonts                                ;; Check if nerd fonts are being used.
       (setq doom-modeline-icon t)                      ;; Enable icons in the mode line if nerd fonts are used.
     (setq doom-modeline-icon nil))                     ;; Disable icons if nerd fonts are not being used.
@@ -919,6 +935,8 @@
   :ensure t
   :straight t
   :custom
+  ;;(neo-window-width 35)
+  (neo-window-fixed-size nil)
   (neo-show-hidden-files t)                ;; By default shows hidden files (toggle with H)
   (neo-theme 'nerd)                        ;; Set the default theme for Neotree to 'nerd' for a visually appealing look.
   (neo-vc-integration '(face char))        ;; Enable VC integration to display file states with faces (color coding) and characters (icons).
@@ -927,6 +945,7 @@
   (if ek-use-nerd-fonts                    ;; Check if nerd fonts are being used.
       (setq neo-theme 'nerd-icons)         ;; Set the theme to 'nerd-icons' if nerd fonts are available.
     (setq neo-theme 'nerd)))               ;; Otherwise, fall back to the 'nerd' theme.
+
 
 
 ;;; NERD ICONS
@@ -966,4 +985,3 @@
   :config
   (nerd-icons-completion-mode)            ;; Activate nerd icons for completion interfaces.
   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup)) ;; Setup icons in the marginalia mode for enhanced completion display.
-

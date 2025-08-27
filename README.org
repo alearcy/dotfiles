@@ -20,3 +20,4 @@ L'unica differenza e' l'init.el di Emacs che va copiato e incollato nella cartel
 [x] notifiche moko
 [x] menu con rofi
 [x] rimuovere tema preso da wallpaper
+[] creare dashboard Emacs

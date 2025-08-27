@@ -1,0 +1,120 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 40,
+  "spacing": 8,
+  "margin-top": 20,
+  "margin-bottom": 0,
+  "margin-left": 20,
+  "margin-right": 20,
+
+  "modules-left": [
+    "image#nixos",
+    "hyprland/workspaces"
+  ],
+  "modules-center": [
+    "hyprland/window"
+  ],
+  "modules-right": [
+    "custom/screenshot",
+    "network",
+    "pulseaudio",
+    "cpu",
+    "memory",
+    "hyprland/language",
+    "clock",
+    "custom/power"
+  ],
+
+  "image#nixos": {
+    "path": "/run/current-system/sw/share/icons/hicolor/scalable/apps/nix-snowflake.svg",
+    "size": 24,
+    "on-click": "rofi -show drun",
+    "tooltip": false
+  },
+
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "format": "{id}",
+    "on-click": "activate",
+    "persistent-workspaces": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": [],
+      "5": []
+    }
+  },
+
+  "hyprland/window": {
+    "format": "{title}",
+    "max-length": 60,
+    "separate-outputs": true
+  },
+
+  "custom/screenshot": {
+    "format": "",
+    "tooltip-format": "Screenshot",
+    "on-click": "gnome-screenshot -i"
+  },
+
+  "network": {
+    "format-wifi": "WiFi: {ipaddr}",
+    "format-ethernet": "Eth: {ipaddr}",
+    "format-disconnected": "Disconnected",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%) {ipaddr}",
+    "tooltip-format-ethernet": "{ifname}: {ipaddr}",
+    "tooltip-format-disconnected": "Disconnected",
+    "max-length": 15
+  },
+
+  "pulseaudio": {
+    "format": "AUDIO: {volume}%",
+    "format-bluetooth": "BL AUDIO: {volume}%",
+    "format-bluetooth-muted": "BL MUTED",
+    "format-muted": "MUTED",
+    "format-source": "{volume}% ",
+    "format-source-muted": "",
+    "format-icons": {
+      "headphone": "🎧",
+      "hands-free": "🎧",
+      "headset": "🎧",
+      "phone": "📞",
+      "portable": "📱",
+      "car": "🚗",
+      "default": ["🔈", "🔉", "🔊"]
+    },
+    "on-click": "pavucontrol",
+    "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+  },
+
+  "cpu": {
+    "format": "CPU: {usage}%",
+    "tooltip": false,
+    "interval": 2
+  },
+
+  "memory": {
+    "format": "RAM: {percentage}%",
+    "tooltip-format": "{used:0.1f}G/{total:0.1f}G used",
+    "interval": 2
+  },
+
+  "hyprland/language": {
+    "format": "{long}",
+    "keyboard-name": "keyboard"
+  },
+
+  "clock": {
+    "format": "{:%Y-%m-%d %H:%M}"
+  },
+
+  "custom/power": {
+    "format": "⏻",
+    "tooltip-format": "Power Menu",
+    "on-click": "wlogout"
+  }
+}
+
+

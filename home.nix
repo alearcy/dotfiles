@@ -17,40 +17,79 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
-    pkgs.nerd-fonts.agave
-    pkgs.nerd-fonts.jetbrains-mono
-    pkgs.kitty-themes
-    pkgs.base16-schemes
+  home.packages = with pkgs; [
+    nerd-fonts.agave
+    nerd-fonts.jetbrains-mono
+    dejavu_fonts
+    base16-schemes
+    gnome-screenshot
+    pavucontrol
     # Shell scripts
-    (pkgs.writeShellScriptBin "aa" (builtins.readFile ./aa.sh) )
+    (writeShellScriptBin "aa" (builtins.readFile ./aa.sh) )
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
+    # Emacs symlinks
+    ".emacs.d/init.el".source = ./init.el;
   };
+home.activation.createMutableThemeFiles = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    WAYBAR_STYLE="$HOME/.config/waybar/style.css"
+    KITTY_STYLE="$HOME/.config/kitty/kitty.conf"  # Se il tuo script modifica anche kitty
+    
+    # Rimuovi symlink se esistono
+    if [ -L "$WAYBAR_STYLE" ]; then
+      rm "$WAYBAR_STYLE"
+    fi
+    
+    # Crea file mutabile se non esiste
+    if [ ! -f "$WAYBAR_STYLE" ]; then
+      mkdir -p "$(dirname "$WAYBAR_STYLE")"
+      cp "${./waybar/style-light.css}" "$WAYBAR_STYLE"
+      chmod 644 "$WAYBAR_STYLE"
+      echo "✅ Created mutable waybar style.css"
+    fi
+    
+    # Se il tuo script modifica anche kitty:
+    # if [ -L "$KITTY_STYLE" ]; then rm "$KITTY_STYLE"; fi
+    # if [ ! -f "$KITTY_STYLE" ]; then
+    #   cp "${./kitty.conf}" "$KITTY_STYLE" 
+    # fi
+  '';
+  # Script che si esegue DOPO che tutti i file sono stati creati
+# Invece, crea il file solo tramite activation script:
+home.activation.createThemeState = lib.hm.dag.entryAfter ["createMutableThemeFiles"] ''
+  THEME_FILE="$HOME/.local/share/theme-state"
+  
+  # Rimuovi il symlink se esiste
+  if [ -L "$THEME_FILE" ]; then
+    rm "$THEME_FILE"
+  fi
+  
+  # Crea il file normale se non esiste
+  if [ ! -f "$THEME_FILE" ]; then
+    mkdir -p "$(dirname "$THEME_FILE")"
+    echo "light" > "$THEME_FILE"
+    echo "✅ Created mutable theme-state file"
+  fi
+'';
+
+home.activation.initTheme = lib.hm.dag.entryAfter ["createThemeState"] ''
+  THEME_FILE="$HOME/.local/share/theme-state"
+  
+  if [ -f "$THEME_FILE" ] && [ ! -L "$THEME_FILE" ]; then
+    THEME=$(cat "$THEME_FILE")
+    echo "🎨 Applying theme: $THEME"
+    aa "$THEME" || echo "⚠️ Theme application failed"
+  fi
+'';
 
   home.sessionVariables = {
     EDITOR = "emacs";
     NIXOS_OZONE_WL = "1"; # Fix Electron problems with Hyprland
   };
-
-  imports = [
-    ./GUI/hyprland.nix
-    ./GUI/waybar.nix
-  ];
-
+  
   programs.git = {
     enable = true;
     userName = "alearcy";
@@ -69,21 +108,6 @@
 
   fonts.fontconfig.enable = true;
 
-  programs.kitty = {
-    enable = true;
-    font = {
-      name = "Agave Nerd Font Mono";
-      size = 13;
-    };
-    settings = {
-       window_padding_width = 8;
-    };
-    # Per un elenco completo: 
-    # ls /nix/store/i9nddlyn2hfr48z7hrs8kkkhd5nhd2qb-kitty-themes-0-unstable-2024-08-14/share/kitty-themes/themes
-    # themeFile = "GruvboxMaterialLightHard";
-    themeFile = "Solarized_Light";
-  };
-
   # Notifiche di sistema
   services.mako = {
     enable = true;
@@ -100,7 +124,165 @@
   programs.rofi = {
     enable = true;
     package = pkgs.rofi-wayland;
-    font = "Agave Nerd Font";
+    font = "Agave Nerd Font 13";
+theme = let
+    inherit (config.lib.formats.rasi) mkLiteral;
+  in {
+    "*" = {
+      /* Solarized Light Colors with transparency */
+      bg-col = mkLiteral "rgba(253, 246, 227, 0.70)";           /* base3 - background (95% opacity) */
+      bg-col-light = mkLiteral "rgba(238, 232, 213, 0.70)";     /* base2 - background highlights (95% opacity) */
+      border-col = mkLiteral "#93a1a1";                         /* base1 - optional emphasized content */
+      selected-col = mkLiteral "#268bd2";                       /* blue - primary content */
+      selected-bg = mkLiteral "rgba(238, 232, 213, 0.70)";      /* base2 - background highlights (95% opacity) */
+      fg-col = mkLiteral "#657b83";                             /* base00 - body text / default code */
+      fg-col2 = mkLiteral "#586e75";                            /* base01 - comments / secondary content */
+      grey = mkLiteral "#93a1a1";                               /* base1 */
+      
+      width = 600;
+    };
+    
+    "window" = {
+      height = 360;
+      border = mkLiteral "3px";
+      border-color = mkLiteral "@grey";
+      background-color = mkLiteral "@bg-col";
+      border-radius = mkLiteral "8px";
+    };
+    
+    "mainbox" = {
+      background-color = mkLiteral "@bg-col";
+      padding = mkLiteral "6px";
+    };
+    
+    "inputbar" = {
+      children = mkLiteral "[prompt,entry]";
+      background-color = mkLiteral "@bg-col-light";
+      border-radius = mkLiteral "6px";
+      padding = mkLiteral "10px 12px";
+      margin = mkLiteral "0px 0px 6px 0px";
+      border = mkLiteral "1px";
+      border-color = mkLiteral "@grey";
+    };
+    
+    "prompt" = {
+      background-color = mkLiteral "transparent";
+      text-color = mkLiteral "@selected-col";
+      margin = mkLiteral "0px 8px 0px 0px";
+    };
+    
+    "entry" = {
+      background-color = mkLiteral "transparent";
+      text-color = mkLiteral "@fg-col";
+      placeholder-color = mkLiteral "@fg-col2";
+    };
+    
+    "listview" = {
+      border = mkLiteral "0px";
+      padding = mkLiteral "0px";
+      margin = mkLiteral "0px";
+      columns = 1;
+      lines = 8;
+      background-color = mkLiteral "@bg-col";
+      scrollbar = false;
+      spacing = mkLiteral "1px";
+    };
+    
+    "element" = {
+      padding = mkLiteral "14px 16px";
+      background-color = mkLiteral "@bg-col";
+      text-color = mkLiteral "@fg-col";
+      border-radius = mkLiteral "4px";
+    };
+    
+    "element-icon" = {
+      background-color = mkLiteral "inherit";
+      text-color = mkLiteral "inherit";
+      size = mkLiteral "20px";
+      margin = mkLiteral "0px 12px 0px 0px";
+    };
+    
+    "element-text" = {
+      background-color = mkLiteral "inherit";
+      text-color = mkLiteral "inherit";
+    };
+    
+    "element selected" = {
+      background-color = mkLiteral "@selected-bg";
+      text-color = mkLiteral "@selected-col";
+    };
+
+    /* Stili specifici per filebrowser */
+    "filebrowser" = {
+      background-color = mkLiteral "@bg-col";
+    };
+
+    /* Message bar */
+    "message" = {
+      background-color = mkLiteral "@bg-col-light";
+      padding = mkLiteral "8px";
+      margin = mkLiteral "0px 0px 6px 0px";
+      border-radius = mkLiteral "4px";
+    };
+    
+    "textbox" = {
+      background-color = mkLiteral "inherit";
+      text-color = mkLiteral "@fg-col2";
+    };
+
+    /* Path bar per filebrowser */
+    "path-bar" = {
+      background-color = mkLiteral "@bg-col-light";
+      text-color = mkLiteral "@fg-col2";
+      padding = mkLiteral "8px 12px";
+      margin = mkLiteral "0px 0px 6px 0px";
+      border-radius = mkLiteral "4px";
+      border = mkLiteral "1px";
+      border-color = mkLiteral "@grey";
+    };
+
+    "element.normal.file" = {
+      background-color = mkLiteral "@bg-col";
+      text-color = mkLiteral "@fg-col";
+    };
+    
+    "element.selected.file" = {
+      background-color = mkLiteral "@selected-bg";
+      text-color = mkLiteral "@selected-col";
+      border = mkLiteral "1px";
+      border-color = mkLiteral "@selected-col";
+    };
+    
+    "element.normal.directory" = {
+      background-color = mkLiteral "@bg-col";
+      text-color = mkLiteral "@selected-col";  /* Directory in blu */
+    };
+    
+    "element.selected.directory" = {
+      background-color = mkLiteral "@selected-bg";
+      text-color = mkLiteral "@selected-col";
+      border = mkLiteral "1px";
+      border-color = mkLiteral "@selected-col";
+    };
+    
+    "mode-switcher" = {
+      spacing = mkLiteral "0px";
+      margin = mkLiteral "4px 0px 0px 0px";
+    };
+    
+    "button" = {
+      padding = mkLiteral "6px 16px";
+      background-color = mkLiteral "@bg-col-light";
+      text-color = mkLiteral "@fg-col2";
+      border-radius = mkLiteral "4px";
+      margin = mkLiteral "0px 4px 0px 0px";
+    };
+    
+    "button selected" = {
+      background-color = mkLiteral "@selected-col";
+      text-color = mkLiteral "@bg-col";
+    };
+  };
     extraConfig = {
       modi = "drun,run,filebrowser";
       show-icons = true;
@@ -116,6 +298,7 @@
   programs.firefox.enable = true;
   programs.chromium.enable = true;
   programs.emacs.enable = true;
+  programs.wlogout.enable = true;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
