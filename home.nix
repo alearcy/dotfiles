@@ -17,14 +17,7 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = with pkgs; [
-    nerd-fonts.agave
-    nerd-fonts.jetbrains-mono
-    dejavu_fonts
-    base16-schemes
-    gnome-screenshot
-    pavucontrol
-  ];
+  home.packages = with pkgs; [];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -128,11 +121,6 @@ home.activation.initTheme = lib.hm.dag.entryAfter ["createThemeState"] ''
     };
   };
 
-  programs.waybar = {
-    enable = true;
-    systemd.enable = true;
-  };
-  
   fonts.fontconfig.enable = true;
 
   # Notifiche di sistema
@@ -321,11 +309,6 @@ home.activation.initTheme = lib.hm.dag.entryAfter ["createThemeState"] ''
       filebrowser-display-format = "{name}";
     };
   };
-
-  programs.firefox.enable = true;
-  programs.chromium.enable = true;
-  programs.emacs.enable = true;
-  programs.wlogout.enable = true;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

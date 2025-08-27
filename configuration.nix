@@ -102,8 +102,10 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+  # This packages list is only for pkg that not require (or I don't need to) additional options, otherwise use programs.pks = syntax.
+  # To check if a package has additional options look at https://nixos.org/manual/nixos/stable/options
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    vim
     wget
     curl
     inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
@@ -111,8 +113,18 @@
     nil # nix lsp
     gopls
     rust-analyzer
+    firefox
+    chromium
+    emacs
+    wlogout
+    nerd-fonts.agave
+    nerd-fonts.jetbrains-mono
+    dejavu_fonts
+    base16-schemes
+    gnome-screenshot
+    pavucontrol
   ];
-  # Hyprland configuration 
+  # Hyprland installation and configuration from unstable version from flake.nix (the oldest hypr pkg is in the nixpkgs repo, the latest is in the flake input) 
   programs.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
@@ -144,7 +156,5 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
-
-  
 
 }
