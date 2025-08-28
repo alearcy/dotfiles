@@ -17,7 +17,9 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = with pkgs; [];
+  home.packages = with pkgs; [
+    (writeShellScriptBin "aa" (builtins.readFile ./aa.sh) )
+  ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -27,53 +29,23 @@
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/emacs.d";
         recursive = true;
     };
-    # aa NixOS scripts
-    ".local/bin" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/aa.sh";
-    };
-  };
 
-  xdg.configFiles = {
-    "hypr" = {
+    "./config/hypr" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr";
       recursive = true;
     };
-    "waybar" = {
+    "./config/waybar" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/waybar";
       recursive = true;
    };
-   "kitty" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/kitty";
+   "./config/kitty" = {
+      source  = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/kitty";
       recursive = true;
-    }
+    };
   };
 
-home.activation.createMutableThemeFiles = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    WAYBAR_STYLE="$HOME/.config/waybar/style.css"
-    KITTY_STYLE="$HOME/.config/kitty/kitty.conf"  # Se il tuo script modifica anche kitty
-    
-    # Rimuovi symlink se esistono
-    if [ -L "$WAYBAR_STYLE" ]; then
-      rm "$WAYBAR_STYLE"
-    fi
-    
-    # Crea file mutabile se non esiste
-    if [ ! -f "$WAYBAR_STYLE" ]; then
-      mkdir -p "$(dirname "$WAYBAR_STYLE")"
-      cp "${./waybar/style-light.css}" "$WAYBAR_STYLE"
-      chmod 644 "$WAYBAR_STYLE"
-      echo "✅ Created mutable waybar style.css"
-    fi
-    
-    # Se il tuo script modifica anche kitty:
-    # if [ -L "$KITTY_STYLE" ]; then rm "$KITTY_STYLE"; fi
-    # if [ ! -f "$KITTY_STYLE" ]; then
-    #   cp "${./kitty.conf}" "$KITTY_STYLE" 
-    # fi
-  '';
-  # Script che si esegue DOPO che tutti i file sono stati creati
-# Invece, crea il file solo tramite activation script:
-home.activation.createThemeState = lib.hm.dag.entryAfter ["createMutableThemeFiles"] ''
+
+home.activation.createThemeState = lib.hm.dag.entryAfter ["writeBoundary"] ''
   THEME_FILE="$HOME/.local/share/theme-state"
   
   # Rimuovi il symlink se esiste
@@ -312,4 +284,4 @@ home.activation.initTheme = lib.hm.dag.entryAfter ["createThemeState"] ''
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-}
+  }

@@ -1,0 +1,16 @@
+;;; -*- coding: utf-8; mode: lisp-data -*-
+(("/home/aa/.dotfiles/"
+  (dired-filename . "/home/aa/.dotfiles/home.nix"))
+ ("/home/aa/.dotfiles/home.nix" . 189)
+ ("/home/aa/.dotfiles/aa.sh" . 3265)
+ ("/home/aa/.dotfiles/configuration.nix" . 3627)
+ ("/home/aa/.dotfiles/flake.nix" . 701)
+ ("/home/aa/.config/hypr/hyprland.conf" . 3026)
+ ("/home/aa/.emacs.d/" (dired-filename . "/home/aa/.emacs.d/init.el"))
+ ("/home/aa/.emacs.d/init.el" . 7858)
+ ("/home/aa/.dotfiles/waybar/" (dired-filename . "/home/aa/.dotfiles"))
+ ("/home/aa/" (dired-filename . "/home/aa/.dotfiles"))
+ ("/home/" (dired-filename . "/home/aa"))
+ ("/home/aa/.dotfiles/README.org" . 915)
+ ("/home/aa/.dotfiles/flake.lock" . 1973)
+ ("/home/aa/.config/" (dired-filename . "/home/aa")))

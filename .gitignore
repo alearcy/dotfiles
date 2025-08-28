@@ -1,0 +1,8 @@
+./emacs.d/auto-save-list
+./emacs.d/eln-cache/*
+./emacs.d/epla
+./emacs.d/history
+./emacs.d/places
+./emacs.d/recentf
+./emacs.d/straight/*
+./emacs.d/transient

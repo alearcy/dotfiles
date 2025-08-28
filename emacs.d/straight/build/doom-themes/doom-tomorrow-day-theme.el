@@ -1,0 +1,1 @@
+/home/aa/.emacs.d/straight/repos/themes/themes/doom-tomorrow-day-theme.el

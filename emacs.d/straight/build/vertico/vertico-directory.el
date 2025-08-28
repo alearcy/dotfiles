@@ -1,0 +1,1 @@
+/home/aa/.emacs.d/straight/repos/vertico/extensions/vertico-directory.el

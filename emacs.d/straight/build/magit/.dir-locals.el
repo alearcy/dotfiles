@@ -1,0 +1,1 @@
+/home/aa/.emacs.d/straight/repos/magit/.dir-locals.el

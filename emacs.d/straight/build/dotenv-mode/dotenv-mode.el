@@ -1,0 +1,1 @@
+/home/aa/.emacs.d/straight/repos/emacs-dotenv-mode/dotenv-mode.el
