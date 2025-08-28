@@ -124,6 +124,8 @@
     pavucontrol
     kitty
     waybar
+    wofi
+    fastfetch
   ];
   # Hyprland installation and configuration from unstable version from flake.nix (the oldest hypr pkg is in the nixpkgs repo, the latest is in the flake input) 
   programs.hyprland.enable = true;
