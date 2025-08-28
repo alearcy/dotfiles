@@ -10,7 +10,7 @@ PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
-FLAKE_DIR="$HOME/.dotfiles"
+FLAKE_DIR="$HOME/dotfiles"
 USER="aa"
 THEME_FILE="$HOME/.local/share/theme-state"  # ← Cambiato qui
 
@@ -48,7 +48,7 @@ check_flake_dir() {
 # Funzione apply_theme - AGGIORNATA per usare il nuovo file
 apply_theme() {
   local MODE="$1"
-  local DOTFILES_PATH="$HOME/.dotfiles"  # Corretto path
+  local DOTFILES_PATH="$HOME/dotfiles"  # Corretto path
 
   echo -e "${BLUE}Applying $MODE theme...${NC}"
 
