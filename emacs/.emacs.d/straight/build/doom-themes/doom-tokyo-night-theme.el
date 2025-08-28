@@ -1,1 +1,0 @@
-/home/aa/.emacs.d/straight/repos/themes/themes/doom-tokyo-night-theme.el

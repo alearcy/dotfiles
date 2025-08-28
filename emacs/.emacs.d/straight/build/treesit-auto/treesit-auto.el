@@ -1,1 +1,0 @@
-/home/aa/.emacs.d/straight/repos/treesit-auto/treesit-auto.el

@@ -1,1 +1,0 @@
-/home/aa/.emacs.d/straight/repos/indent-guide/indent-guide.el

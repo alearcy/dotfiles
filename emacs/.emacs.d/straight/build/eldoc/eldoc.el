@@ -1,1 +1,0 @@
-/home/aa/.emacs.d/straight/repos/eldoc/eldoc.el
