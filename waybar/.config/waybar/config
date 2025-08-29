@@ -29,7 +29,7 @@
   "image#nixos": {
     "path": "/run/current-system/sw/share/icons/hicolor/scalable/apps/nix-snowflake.svg",
     "size": 24,
-    "on-click": "rofi -show drun",
+    "on-click": "wofi --show drun",
     "tooltip": false
   },
 

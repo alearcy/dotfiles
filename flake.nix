@@ -4,7 +4,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    
+    swww.url = "github:LGFae/swww";    
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -14,9 +14,9 @@
     hyprland.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, ... } @inputs: {
+  outputs = { self, nixpkgs, home-manager, hyprland, swww, ... } @inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit hyprland; };
+        specialArgs = { inherit hyprland swww; };
         system = "x86_64-linux";
         modules = [
           ./configuration.nix

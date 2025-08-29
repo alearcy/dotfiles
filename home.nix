@@ -30,15 +30,15 @@
         recursive = true;
     };
 
-    "./config/hypr" = {
+    ".config/hypr" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/hypr/.config/hypr";
       recursive = true;
     };
-    "./config/waybar" = {
+    ".config/waybar" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/waybar/.config/waybar";
       recursive = true;
    };
-   "./config/kitty" = {
+   ".config/kitty" = {
       source  = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/kitty/.config/kitty";
       recursive = true;
     };

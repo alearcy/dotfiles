@@ -51,23 +51,41 @@ apply_theme() {
   local DOTFILES_PATH="$HOME/dotfiles"  # Corretto path
 
   echo -e "${BLUE}Applying $MODE theme...${NC}"
-
-  # Kitty theme
-  if command -v kitten >/dev/null; then
+  # Change bkg with swww
+  if command -v swww >/dev/null; then
     case "$MODE" in
-      "light")
-        kitten themes --reload-in=all "Modus Operandi Tinted"
-        echo -e "${YELLOW}Applied Kitty theme: Modus Operandi Tinted${NC}"
-        ;;
-      "dark")
-        kitten themes --reload-in=all "Modus Vivendi Tinted"
-        echo -e "${YELLOW}Applied Kitty theme: Modus Vivendi Tinted${NC}"
-        ;;
+    "light")
+       swww img $DOTFILES_PATH/wallpaper.png --transition-type=right --transition-step=10
+       ;;
+    "dark")
+       swww img $DOTFILES_PATH/wallpaper.jpg --transition-type=right --transition-step=10
+       ;;
     esac
   else
-    echo -e "${RED}Warning: kitten not found${NC}"
+    echo -e "Impossibile to change background"
   fi
-
+  sleep 1
+  # Change cursor theme
+  if command -v hyprctl >/dev/null; then
+      case "$MODE" in
+		  "light")
+			  hyprctl setcursor Nordzy-hyprcursors 24
+			  gsettings set org.gnome.desktop.interface cursor-theme "Nordzy-cursors"
+			  export XCURSOR_THEME="Nordzy-cursors"
+			  export XCURSOR_SIZE=24
+			  hyprctl reload
+			  ;;
+		  "dark")
+			  hyprctl setcursor Nordzy-hyprcursors-white 24
+			  gsettings set org.gnome.desktop.interface cursor-theme "Nordzy-cursors-white"
+			  export XCURSOR_THEME="Nordzy-cursors-white"
+			  export XCURSOR_SIZE=24
+			  hyprctl reload
+			  ;;
+	  esac
+  else
+	  echo -e "No hyprland WM found!"
+  fi
   # Waybar theme
   if [ -f "$DOTFILES_PATH/waybar/style-${MODE}.css" ]; then
     cp "$DOTFILES_PATH/waybar/style-${MODE}.css" "$HOME/.config/waybar/style.css"
@@ -93,11 +111,9 @@ apply_theme() {
     fi
     echo -e "${YELLOW}Applied GTK theme: ${MODE}${NC}"
   fi
-
   echo -e "${GREEN}Theme $MODE succesfully applied${NC}"
 }
 
-# Funzione switch_theme - AGGIORNATA per salvare nel nuovo file
 switch_theme() {
   local MODE="$1"
   case "$MODE" in
@@ -113,7 +129,6 @@ switch_theme() {
   esac
 }
 
-# Funzione toggle - AGGIORNATA per leggere dal nuovo file
 toggle_theme() {
   local CURRENT="light"
   if [ -f "$THEME_FILE" ]; then
@@ -126,7 +141,6 @@ toggle_theme() {
   fi
 }
 
-# Funzione show_theme - AGGIORNATA per leggere dal nuovo file
 show_theme() {
   if [ -f "$THEME_FILE" ]; then
     local current=$(cat "$THEME_FILE")
