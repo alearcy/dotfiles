@@ -21,3 +21,9 @@ L'unica differenza e' l'init.el di Emacs che va copiato e incollato nella cartel
 [x] menu con rofi
 [x] rimuovere tema preso da wallpaper
 [] creare dashboard Emacs
+
+* PER SCRIPT AA
+
+chmod +x ~/dotfiles/aa.sh
+
+ln -s ~/dotfiles/aa.sh ~/.local/bin/aa
