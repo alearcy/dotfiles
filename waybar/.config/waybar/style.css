@@ -1,4 +1,4 @@
-    * {
+ * {
       font-family: "Agave Nerd Font";
       font-size: 13px;
       font-weight: normal;
@@ -8,97 +8,137 @@
       margin: 0;
       padding: 0;
     }
+    
+    /* Nord Theme Colors */
+		/* Polar Night */
+		@define-color nord0 #2e3440;   /* darkest background */
+		@define-color nord1 #3b4252;   /* dark background */
+		@define-color nord2 #434c5e;   /* darker foreground */
+		@define-color nord3 #4c566a;   /* dark foreground */
+		/* Snow Storm */
+		@define-color nord4 #d8dee9;   /* light foreground */
+		@define-color nord5 #e5e9f0;   /* lighter foreground */
+		@define-color nord6 #eceff4;   /* lightest foreground */
+		/* Frost */
+		@define-color nord7 #8fbcbb;   /* frost cyan */
+		@define-color nord8 #88c0d0;   /* frost light blue */
+		@define-color nord9 #81a1c1;   /* frost blue */
+		@define-color nord10 #5e81ac;  /* frost dark blue */
+		/* Aurora */
+		@define-color nord11 #bf616a;  /* red */
+		@define-color nord12 #d08770;  /* orange */
+		@define-color nord13 #ebcb8b;  /* yellow */
+		@define-color nord14 #a3be8c;  /* green */
+		@define-color nord15 #b48ead;  /* purple */
 
-    /* Solarized Light Colors */
-    @define-color base03 #002b36;
-    @define-color base02 #073642;
-    @define-color base01 #586e75;
-    @define-color base00 #000000;
-    @define-color base0 #839496;
-    @define-color base1 #93a1a1;
-    @define-color base2 #eee8d5;
-    @define-color base3 #fdf6e3;
-    @define-color yellow #b58900;
-    @define-color orange #cb4b16;
-    @define-color red #dc322f;
-    @define-color magenta #d33682;
-    @define-color violet #6c71c4;
-    @define-color blue #268bd2;
-    @define-color cyan #2aa198;
-    @define-color green #859900;
-
+		/* Compatibility aliases */
+    @define-color base03 @nord0;
+    @define-color base02 @nord1;
+    @define-color base01 @nord3;
+    @define-color base00 @nord4;
+    @define-color base0 @nord4;
+    @define-color base1 @nord5;
+    @define-color base2 @nord1;
+    @define-color base3 @nord6;
+    @define-color yellow @nord13;
+    @define-color orange @nord12;
+    @define-color red @nord11;
+    @define-color magenta @nord15;
+    @define-color violet @nord15;
+    @define-color blue @nord10;
+    @define-color cyan @nord7;
+    @define-color green @nord14;
+    
     window#waybar {
-      background: rgba(253, 246, 227, 0.90);
+      background: rgba(46, 52, 64, 0.90);
       border-radius: 10px;
       color: @base00;
     }
+    
+    /* Centramento verticale uniforme usando padding */
 
+    #custom-arch-logo {
+      padding: 8px 10px;
+      font-size: 24px;
+      margin-right: 4px;
+    }
+    
     /* Sezioni principali */
     .modules-left,
     .modules-center,
     .modules-right {
       background: transparent;
     }
-
+    
     .modules-left {
       margin-left: 8px;
     }
-
+    
     .modules-right {
       margin-right: 8px;
       border-radius: 10px;
     }
-
+    
     /* Logo NixOS */
     #image {
       margin-right: 8px;
       padding: 0 8px;
     }
-
-    #image:hover {
-      background: @blue;
-      color: @base3;
-    }
-
+    
+    
     /* Workspaces */
     #workspaces {
       border-radius: 12px;
       padding: 0 4px;
     }
-
+    
     #workspaces button {
       background: transparent;
-      color: @base01;
-      border-radius: 10px;
-      padding: 4px 8px;
-      margin: 2px;
-      transition: all 0.2s ease;
+      color: @nord3;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      outline: none;
+      text-shadow: none;
+      padding: 8px 4px;
+      margin: 1px;
+      transition: color 0.2s ease;
+      font-size: 12px;
+      min-width: 16px;
     }
-
+    
     #workspaces button:hover {
-      background: @base1;
-      color: @base3;
+      background: transparent;
+      color: @nord6;
+      border: none;
+      box-shadow: none;
+      outline: none;
+      text-shadow: none;
     }
-
+    
     #workspaces button.active {
-      background: @blue;
-      color: @base3;
+      background: transparent;
+      color: @nord6;
+      border: none;
+      box-shadow: none;
+      outline: none;
+      text-shadow: none;
     }
-
+    
     #workspaces button.urgent {
       background: @red;
       color: @base3;
     }
-
+    
     /* Finestra centrale */
     #window {
       color: @base00;
-      padding: 0 15px;
+      padding: 8px 15px;
       font-weight: bold;
       font-family: "Agave Nerd Font Bold";
       font-size: 13px;
     }
-
+    
     /* Moduli a destra */
     #custom-screenshot,
     #network,
@@ -108,52 +148,54 @@
     #clock,
     #custom-power {
       color: @base00;
-      padding: 0 12px;
+      padding: 8px 12px;
       /*margin: 0 2px;*/
-      transition: all 0.2s ease;
     }
-
-    /* Hover effects */
-    #custom-screenshot:hover { background: @cyan; color: @base3; }
-    #network:hover { background: @green; color: @base3; }
-    #pulseaudio:hover { background: @blue; color: @base3; }
-    #cpu:hover { background: @orange; color: @base3; }
-    #memory:hover { background: @yellow; color: @base3; }
-    #language:hover { background: @violet; color: @base3; }
-    #clock:hover { background: @magenta; color: @base3; }
-    #custom-power:hover { background: @red; color: @base3; }
-
+    
+    /* Stili specifici per i moduli con icone */
+    #pulseaudio,
+    #network,
+    #cpu,
+    #memory {
+      padding: 8px 12px;
+      color: @base00;
+      font-weight: normal;
+    }
+    
+    /* Margine destro per le icone - non più necessario con spazi nel markup */
+    
+    
     /* Stati speciali */
     #pulseaudio.muted {
       background: @red;
       color: @base3;
     }
-
+    
     #network.disconnected {
       background: @red;
       color: @base3;
     }
-
+    
     #cpu.warning {
       background: @yellow;
       color: @base3;
     }
-
+    
     #cpu.critical {
       background: @red;
       color: @base3;
     }
-
+    
     #memory.warning {
       background: @yellow;
       color: @base3;
     }
-
+    
     #memory.critical {
       background: @red;
       color: @base3;
     }
-
+    
     /* Tooltip */
     tooltip {
       background: @base2;
@@ -161,3 +203,4 @@
       border-radius: 8px;
       color: @base00;
     }
+
