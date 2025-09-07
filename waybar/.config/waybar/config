@@ -22,6 +22,7 @@
     "pulseaudio",
     "cpu",
     "memory",
+    "battery",
     "hyprland/language",
     "clock",
     "custom/power"
@@ -36,7 +37,12 @@
   "hyprland/workspaces": {
     "disable-scroll": true,
     "all-outputs": true,
-    "format": "●",
+    "format": "{icon}",
+    "format-icons": {
+      "urgent": "",
+      "active": "",
+      "default": ""
+    },
     "on-click": "activate",
     "persistent-workspaces": {
       "1": [],
@@ -55,53 +61,54 @@
   },
 
   "network": {
-    "format-wifi": "<span size='large'>󰖩</span> {ipaddr}",
-    "format-ethernet": "<span size='large'>󰈀</span> {ipaddr}",
-    "format-disconnected": "<span size='large'>󰖪</span> Disconnected",
+    "format-wifi": "󰖩 {ipaddr}",
+    "format-ethernet": "󰈀 {ipaddr}",
+    "format-disconnected": "󰖪 Disconnected",
     "max-length": 25,
     "tooltip": false
   },
 
   "pulseaudio": {
-    "format": "<span size='large'>󰕾</span> {volume}%",
-    "format-bluetooth": "<span size='large'>󰂯</span> {volume}%",
-    "format-bluetooth-muted": "<span size='large'>󰂲</span>",
-    "format-muted": "<span size='large'>󰖁</span>",
+    "format": "󰕾 {volume}%",
+    "format-bluetooth": "󰂯 {volume}%",
+    "format-bluetooth-muted": "󰂲",
+    "format-muted": "󰖁 muted",
     "format-source": "{volume}% ",
     "format-source-muted": "",
-    "format-icons": {
-      "headphone": "🎧",
-      "hands-free": "🎧",
-      "headset": "🎧",
-      "phone": "📞",
-      "portable": "📱",
-      "car": "🚗",
-      "default": ["🔈", "🔉", "🔊"]
-    },
 	"tooltip": false,
     "on-click": "${TERMINAL:-kitty} -e wiremix",
     "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
   },
 
   "cpu": {
-    "format": "<span size='large'>󰻠</span> {usage}%",
+    "format": " {usage}%",
     "tooltip": false,
     "interval": 2
   },
 
   "memory": {
-    "format": "<span size='large'>󰍛</span> {percentage}%",
+    "format": " {percentage}%",
     "tooltip": false,
     "interval": 2
   },
 
+  "battery": {
+    "bat-compatibility": true,
+    "states": {
+        "warning": 30,
+        "critical": 15
+    },
+    "format": "{capacity}% {icon}",
+    "format-icons": ["", "", "", "", ""]
+  },
+
   "hyprland/language": {
-    "format": "<span size='large'>󰌌</span> {short}",
+    "format": "󰌌 {short} {variant}",
     "keyboard-name": "keyboard"
   },
 
   "clock": {
-    "format": "<span size='large'>󰥔</span> {:%d/%m/%Y %H:%M}",
+    "format": "󰥔 {:%d/%m/%Y %H:%M}",
     "tooltip": false
   },
 
