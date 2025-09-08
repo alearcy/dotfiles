@@ -81,32 +81,9 @@ home.activation.initTheme = lib.hm.dag.entryAfter ["createThemeState"] ''
     userName = "alearcy";
     userEmail = "arcidiaco.a@gmail.com";
   };
-
-  programs.zsh = {
-    enable = true;
-    enableAutosuggestions = true;
-    enableCompletion = true;
-    oh-my-zsh = {
-      enable = true;
-      plugins = ["git" "git-flow"];
-      theme = "agnoster";
-    };
-  };
-
+  
   fonts.fontconfig.enable = true;
-
-  # Notifiche di sistema
-  services.mako = {
-    enable = true;
-    width = 350;
-    height = 120;
-    margin = "20";
-    padding = "15";
-    defaultTimeout = 8000;
-    groupBy = "summary";
-    sort = "-time";
-  };
-
+  
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
