@@ -24,8 +24,7 @@
     "memory",
     "battery",
     "hyprland/language",
-    "clock",
-    "custom/power"
+    "clock"
   ],
 
   "custom/arch-logo": {
@@ -57,7 +56,7 @@
     "format": "{title}",
     "max-length": 60,
     "separate-outputs": true,
-	"tooltip": true
+	"tooltip": false
   },
 
   "network": {
@@ -111,12 +110,6 @@
     "format": "󰥔 {:%d/%m/%Y %H:%M}",
     "tooltip": false
   },
-
-  "custom/power": {
-    "format": "⏻",
-    "tooltip": false,
-    "on-click": "wlogout"
-  }
-}
+ }
 
 

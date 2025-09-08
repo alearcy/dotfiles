@@ -1,42 +1,42 @@
-/* Solarized Light Theme Variables */
+/* Generic Theme Variables - Dark Mode */
 /* Background Colors */
-@define-color bg-primary #fdf6e3;
+@define-color bg-primary #2e3440;
 /* Main background */
-@define-color bg-secondary #eee8d5;
+@define-color bg-secondary #3b4252;
 /* Secondary background */
-@define-color bg-tertiary #93a1a1;
+@define-color bg-tertiary #434c5e;
 /* Tertiary background */
-@define-color bg-accent #839496;
+@define-color bg-accent #4c566a;
 /* Accent background */
 
 /* Foreground Colors */
-@define-color fg-primary #657b83;
+@define-color fg-primary #d8dee9;
 /* Main text */
-@define-color fg-secondary #586e75;
+@define-color fg-secondary #e5e9f0;
 /* Secondary text */
-@define-color fg-tertiary #073642;
+@define-color fg-tertiary #eceff4;
 /* Tertiary text */
-@define-color fg-muted #93a1a1;
+@define-color fg-muted #4c566a;
 /* Muted text */
 
 /* Accent Colors */
-@define-color accent-cyan #2aa198;
+@define-color accent-cyan #8fbcbb;
 /* Cyan accent */
-@define-color accent-blue #268bd2;
+@define-color accent-blue #88c0d0;
 /* Blue accent */
-@define-color accent-blue-dark #073642;
+@define-color accent-blue-dark #5e81ac;
 /* Dark blue accent */
 
 /* Status Colors */
-@define-color color-red #dc322f;
+@define-color color-red #bf616a;
 /* Error/Critical */
-@define-color color-orange #cb4b16;
+@define-color color-orange #d08770;
 /* Warning */
-@define-color color-yellow #b58900;
+@define-color color-yellow #ebcb8b;
 /* Warning alt */
-@define-color color-green #859900;
+@define-color color-green #a3be8c;
 /* Success */
-@define-color color-purple #6c71c4;
+@define-color color-purple #b48ead;
 /* Info */
 
 * {
@@ -54,7 +54,6 @@ window#waybar {
   border-radius: 10px;
   background: @bg-primary;
   color: @fg-primary;
-  border: 1px solid @bg-accent;
 }
 
 #custom-arch-logo {
@@ -114,7 +113,7 @@ window#waybar {
 
 #workspaces button.urgent {
   background: @color-red;
-  color: @bg-primary;
+  color: @fg-tertiary;
 }
 
 #window {
@@ -141,13 +140,13 @@ window#waybar {
 #cpu.critical,
 #memory.critical {
   background: @color-red;
-  color: @bg-primary;
+  color: @fg-tertiary;
 }
 
 #cpu.warning,
 #memory.warning {
   background: @color-yellow;
-  color: @bg-primary;
+  color: @fg-tertiary;
 }
 
 tooltip {
