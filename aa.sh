@@ -38,21 +38,51 @@ check_flake_dir() {
 apply_theme() {
   local MODE="$1"
   local DOTFILES_PATH="$HOME/dotfiles"
-  
+  local conffile="$HOME/.config/mako/config"
   # Change bkg with swww
   if command -v swww >/dev/null; then
     case "$MODE" in
     "light")
-       swww img $DOTFILES_PATH/wallpaper.png --transition-type=right --transition-step=10
+       swww img $DOTFILES_PATH/light.png --transition-type=right --transition-step=10
        ;;
     "dark")
-       swww img $DOTFILES_PATH/wallpaper.jpg --transition-type=right --transition-step=10
+       swww img $DOTFILES_PATH/dark.jpg --transition-type=right --transition-step=10
        ;;
     esac
   fi
   
   sleep 1
  
+  # Mako theme colors
+  if command -v makoctl >/dev/null; then
+    if [ -f "$conffile" ]; then
+      declare -A colors
+      case "$MODE" in
+      "light")
+        # Solarized Light colors
+        colors=(
+          ["background-color"]="#fdf6e3d9"
+          ["text-color"]="#657b83"
+          ["border-color"]="#93a1a1"
+        )
+        ;;
+      "dark")
+        # Nord colors
+        colors=(
+          ["background-color"]="#2e3440d9"
+          ["text-color"]="#d8dee9"
+          ["border-color"]="#5e81ac"
+        )
+        ;;
+      esac
+
+      for color_name in "${!colors[@]}"; do
+        sed -i "0,/^$color_name.*/{s//$color_name=${colors[$color_name]}/}" "$conffile"
+      done
+
+      makoctl reload
+    fi
+  fi
 
   # GTK theme
   if command -v gsettings >/dev/null; then
@@ -61,19 +91,15 @@ apply_theme() {
       gsettings set org.gnome.desktop.interface gtk-theme "Adwaita"
     else
       gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
-	  gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
+      gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
     fi
   fi
+
+  sleep 1
 
   # Kitty and waybar automatically change theme based on system color scheme using light and dark css.
   
   notify-send "AA System" "Theme $MODE successfully applied!" --urgency=low
-}
-
-switch_theme() {
-  local MODE="$1"
-  echo "$MODE" > "$THEME_FILE"
-  apply_theme "$MODE"
 }
 
 # Menu fuzzel principale
@@ -101,18 +127,16 @@ show_menu() {
     "${shutdown_icon} Shutdown"
   )
   
-  # Converte array in stringa con newline
   local options=$(printf '%s\n' "${menu_options[@]}")
   local lines_count=${#menu_options[@]}
 
-  local chosen=$(echo "$options" | fuzzel --dmenu --prompt "AA System: " --lines $lines_count)
+  local chosen=$(echo "$options" | fuzzel --dmenu --prompt "Search: " --lines $lines_count)
 
   case "$chosen" in
 	"${apps_icon} Apps")
 		fuzzel
 		;;
     "${rebuild_icon} Rebuild System")
-      # Esegui in terminale nascosto per vedere l'output
       ${TERMINAL} --title "AA System - Rebuild" -e bash -c "
         echo -e '${CYAN}AA System - Rebuilding...${NC}'
         if [ ! -d '$FLAKE_DIR' ]; then
@@ -160,10 +184,10 @@ show_menu() {
       " &
       ;;
     "${light_icon} Light Theme")
-      switch_theme "light"
+      apply_theme "light"
       ;;
     "${dark_icon} Dark Theme")
-      switch_theme "dark"
+      apply_theme "dark"
       ;;
     "${lock_icon} Lock Screen")
       hyprlock
@@ -177,14 +201,9 @@ show_menu() {
     "${shutdown_icon} Shutdown")
       systemctl poweroff
       ;;
-    # "😴 Suspend")
-    #   systemctl suspend
-    #   ;;
-    *)
-      # Se è vuoto o ESC, non fare nulla
+      *)
       ;;
   esac
 }
 
-# Sempre mostra il menu fuzzel
 show_menu
