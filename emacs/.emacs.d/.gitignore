@@ -1,0 +1,17 @@
+.cache
+.claude
+auto-save-list
+eln-cache
+elpa
+eshell
+image-dired
+straight
+transient
+tree-sitter
+.lsp-session
+.lsp-session-v1
+history
+places
+projectile-bookmarks.eld
+projects
+recentf
