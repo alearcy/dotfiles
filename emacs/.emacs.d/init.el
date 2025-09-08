@@ -210,7 +210,6 @@
   (file-name-shadow-mode 1)    ;; Enable shadowing of filenames for clarity.
   (electric-pair-mode 1)       ;; Enable automatic pairing of brackets and quotes.
   (scroll-bar-mode -1)
-  (setq-default header-line-format " ")
   
   ;; Set the default coding system for files to UTF-8.
   (modify-coding-system-alist 'file "" 'utf-8)
@@ -927,6 +926,12 @@
       :tab-width 4
       :right-divider-width 30
       :scroll-bar-width 8)))
+
+;; Sintassi evidenziata nei blocchi src in org mode
+(setq org-src-fontify-natively t)
+(setq org-src-tab-acts-natively t)
+(setq org-confirm-babel-evaluate nil) ;; opzionale, evita prompt di conferma
+
 
 (provide 'init)
 ;;; init.el ends here
