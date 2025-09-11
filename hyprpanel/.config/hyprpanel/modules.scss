@@ -1,0 +1,7 @@
+/* ##################################
+ * #  Custom Volume Module Styling  #
+ * ################################## */
+@include styleModule('cmodule-arch-script',
+  ('icon-color': #242438,
+    'inner-spacing' : 0em,
+    'icon-size': 1.5em));
