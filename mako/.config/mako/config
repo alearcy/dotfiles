@@ -21,10 +21,10 @@ on-touch=invoke-default-action
 font=sans-serif 12
 
 # background color of notification( #RRGGBB | #RRGGBBAA )
-background-color=#fdf6e3d9
+background-color=#2e3440d9
 
 # Text color inside the notification( #RRGGBB | #RRGGBBAA )
-text-color=#657b83
+text-color=#d8dee9
 
 # Set width of notification popup.( value in px )
 width=299
@@ -44,7 +44,7 @@ padding=10
 border-size=1
 
 # color of border of each notification( #RRGGBB | #RRGGBBAA )
-border-color=#93a1a1
+border-color=#5e81ac
 
 # bordear radious of each notification(value in px )
 border-radius=10
