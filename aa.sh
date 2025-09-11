@@ -52,37 +52,49 @@ apply_theme() {
   fi
   
   sleep 1
+
+  if command -v hyprpanel >/dev/null; then
+
+    case "$MODE" in
+    "light")
+       hyprpanel ut ".config/hyprpanel/solarized.json" 
+       ;;
+    "dark")
+       hyprpanel ut ".config/hyprpanel/nord.json" 
+       ;;
+    esac
+  fi  
  
   # Mako theme colors
-  if command -v makoctl >/dev/null; then
-    if [ -f "$conffile" ]; then
-      declare -A colors
-      case "$MODE" in
-      "light")
-        # Solarized Light colors
-        colors=(
-          ["background-color"]="#fdf6e3d9"
-          ["text-color"]="#657b83"
-          ["border-color"]="#93a1a1"
-        )
-        ;;
-      "dark")
-        # Nord colors
-        colors=(
-          ["background-color"]="#2e3440d9"
-          ["text-color"]="#d8dee9"
-          ["border-color"]="#5e81ac"
-        )
-        ;;
-      esac
+  # if command -v makoctl >/dev/null; then
+  #   if [ -f "$conffile" ]; then
+  #     declare -A colors
+  #     case "$MODE" in
+  #     "light")
+  #       # Solarized Light colors
+  #       colors=(
+  #         ["background-color"]="#fdf6e3d9"
+  #         ["text-color"]="#657b83"
+  #         ["border-color"]="#93a1a1"
+  #       )
+  #       ;;
+  #     "dark")
+  #       # Nord colors
+  #       colors=(
+  #         ["background-color"]="#2e3440d9"
+  #         ["text-color"]="#d8dee9"
+  #         ["border-color"]="#5e81ac"
+  #       )
+  #       ;;
+  #     esac
 
-      for color_name in "${!colors[@]}"; do
-        sed -i "0,/^$color_name.*/{s//$color_name=${colors[$color_name]}/}" "$conffile"
-      done
+  #     for color_name in "${!colors[@]}"; do
+  #       sed -i "0,/^$color_name.*/{s//$color_name=${colors[$color_name]}/}" "$conffile"
+  #     done
 
-      makoctl reload
-    fi
-  fi
+  #     makoctl reload
+  #   fi
+  # fi
 
   # GTK theme
   if command -v gsettings >/dev/null; then
@@ -97,9 +109,8 @@ apply_theme() {
 
   sleep 1
 
-  # Kitty and waybar automatically change theme based on system color scheme using light and dark css.
-  
-  notify-send "AA System" "Theme $MODE successfully applied!" --urgency=low
+  # Kitty automatically change theme based on system color scheme using light and dark css.
+ 
 }
 
 # Menu fuzzel principale
