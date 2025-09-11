@@ -30,7 +30,7 @@
   "custom/arch-logo": {
     "format": "\uf303",
     "tooltip": false,
-    "on-click": "wofi --show drun"
+    "on-click": "aa"
   },
 
   "hyprland/workspaces": {

@@ -18,6 +18,9 @@ alias tree="eza -T --git-ignore --icons"
 alias cat="bat"
 alias sudohx='EDITOR=helix sudoedit'
 
+# command typo correction
+setopt CORRECT
+
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 
