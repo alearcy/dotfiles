@@ -51,13 +51,11 @@ apply_theme() {
     esac
   fi
   
-  sleep 1
-
   if command -v hyprpanel >/dev/null; then
 
     case "$MODE" in
     "light")
-       hyprpanel ut ".config/hyprpanel/solarized.json" 
+       hyprpanel ut ".config/hyprpanel/flexoki.json" 
        ;;
     "dark")
        hyprpanel ut ".config/hyprpanel/nord.json" 
