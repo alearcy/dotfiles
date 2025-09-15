@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, hyprland, swww, ... }:
+{ config, pkgs, hyprland, swww, hyprpanel, ... }:
 
 {
   imports =
@@ -70,12 +70,12 @@
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
-    open = false;
+    open = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.displayManager.gdm.enable = false;
+  services.xserver.desktopManager.gnome.enable = false;
   services.displayManager.sessionPackages = [hyprland.packages.${pkgs.system}.hyprland];
   #programs.hyprland.enable = true;
   
@@ -129,36 +129,51 @@
   # This packages list is only for pkg that not require (or I don't need to) additional options, otherwise use programs.pks = syntax.
   # To check if a package has additional options look at https://nixos.org/manual/nixos/stable/options
   environment.systemPackages = with pkgs; [
-    vim
     wget
     curl
     bat
+    git
+    starship
     nil # nix lsp
+    python314
+    fzf
+    eza
     gopls
     rust-analyzer
     firefox
-    chromium
     emacs
-    wlogout
+    neovim
     nerd-fonts.agave
     nerd-fonts.jetbrains-mono
+    inter-nerdfont
+    nerd-fonts.noto
+    nnn
+    ripgrep
+    yazi
+    lazygit
+    tree
+    zsh
+    zoxide
+    lazydocker
+    helix
+    hyprlock
+    hyprpanel
+    btop
     dejavu_fonts
-    base16-schemes
-    gnome-screenshot
-    pavucontrol
     kitty
-    waybar
-    wofi
+    fuzzel
     fastfetch
     swww.packages.${pkgs.system}.swww
     google-chrome
-    nordzy-cursor-theme
-    bibata-cursors
   ];
   # Hyprland installation and configuration from unstable version from flake.nix (the oldest hypr pkg is in the nixpkgs repo, the latest is in the flake input) 
   programs.hyprland = {
     enable = true;
     package = hyprland.packages.${pkgs.system}.hyprland;
+  };
+  programs.hyprpanel = {
+    enable = true;
+    package = hyprpanel.packages.${pkgs.system}.hyprpanel;
   };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
