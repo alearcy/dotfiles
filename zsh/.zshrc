@@ -17,6 +17,7 @@ alias hx="helix"
 alias tree="eza -T --git-ignore --icons"
 alias cat="bat"
 alias sudohx='EDITOR=helix sudoedit'
+alias et='rm -rf ~/.local/share/Trash/*'
 
 # command typo correction
 setopt CORRECT
