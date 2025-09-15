@@ -12,11 +12,15 @@
     
     hyprland.url = "github:hyprwm/Hyprland";
     hyprland.inputs.nixpkgs.follows = "nixpkgs";
+    hyprpanel = {
+      url = "github:Jas-SinghFSU/HyprPanel";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, swww, ... } @inputs: {
+  outputs = { self, nixpkgs, home-manager, hyprland, swww, hyprpanel, ... } @inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit hyprland swww; };
+        specialArgs = { inherit hyprland swww hyprpanel; };
         system = "x86_64-linux";
         modules = [
           ./configuration.nix
