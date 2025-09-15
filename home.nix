@@ -24,52 +24,43 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    # Emacs symlinks
     ".emacs.d" = {
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/emacs/.emacs.d";
         recursive = true;
     };
-
     ".config/hypr" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/hypr/.config/hypr";
       recursive = true;
     };
-    ".config/waybar" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/waybar/.config/waybar";
-      recursive = true;
-   };
    ".config/kitty" = {
       source  = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/kitty/.config/kitty";
       recursive = true;
+   };
+   ".config/fuzzel" = {
+      source  = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/fuzzel/.config/fuzzel";
+      recursive = true;
+   };
+    ".config/hyprpanel" = {
+      source  = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/hyprpanel/.config/hyprpanel";
+      recursive = true;
+    };
+    ".config/btop" = {
+      source  = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/btop/.config/btop";
+      recursive = true;
+    };
+    ".config/bottom" = {
+      source  = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/bottom/.config/bottom";
+      recursive = true;
+    };
+    ".config/yazi" = {
+      source  = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/yazi/.config/yazi";
+      recursive = true;
+    };
+    ".zshrc" = {
+      source  = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/zsh/.zshrc";
+      recursive = true;
     };
   };
-
-
-home.activation.createThemeState = lib.hm.dag.entryAfter ["writeBoundary"] ''
-  THEME_FILE="$HOME/.local/share/theme-state"
-  
-  # Rimuovi il symlink se esiste
-  if [ -L "$THEME_FILE" ]; then
-    rm "$THEME_FILE"
-  fi
-  
-  # Crea il file normale se non esiste
-  if [ ! -f "$THEME_FILE" ]; then
-    mkdir -p "$(dirname "$THEME_FILE")"
-    echo "light" > "$THEME_FILE"
-    echo "✅ Created mutable theme-state file"
-  fi
-'';
-
-home.activation.initTheme = lib.hm.dag.entryAfter ["createThemeState"] ''
-  THEME_FILE="$HOME/.local/share/theme-state"
-  
-  if [ -f "$THEME_FILE" ] && [ ! -L "$THEME_FILE" ]; then
-    THEME=$(cat "$THEME_FILE")
-    echo "🎨 Applying theme: $THEME"
-    aa "$THEME" || echo "⚠️ Theme application failed"
-  fi
-'';
 
   home.sessionVariables = {
     EDITOR = "emacs";
