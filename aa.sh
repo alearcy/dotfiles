@@ -38,7 +38,6 @@ check_flake_dir() {
 apply_theme() {
   local MODE="$1"
   local DOTFILES_PATH="$HOME/dotfiles"
-  local conffile="$HOME/.config/mako/config"
   # Change bkg with swww
   if command -v swww >/dev/null; then
     case "$MODE" in
