@@ -38,7 +38,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "nixaa"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -147,7 +147,6 @@
     nerd-fonts.jetbrains-mono
     inter-nerdfont
     nerd-fonts.noto
-    nnn
     ripgrep
     yazi
     lazygit
