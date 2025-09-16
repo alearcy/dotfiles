@@ -1,0 +1,14 @@
+[[plugin.deps]]
+use = "yazi-rs/plugins:git"
+rev = "109b13d"
+hash = "63b6c222bf2103b3023389dde5e2ecfe"
+
+[[flavor.deps]]
+use = "gosxrgxx/flexoki-light"
+rev = "45eb0a0"
+hash = "1ee212b0799497b54c7e60bac8931e4e"
+
+[[flavor.deps]]
+use = "AdithyanA2005/nord"
+rev = "3a791e9"
+hash = "fa7142cda74a50b271ea212356b40b57"
