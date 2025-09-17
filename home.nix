@@ -60,6 +60,10 @@
       source  = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/zsh/.zshrc";
       recursive = true;
     };
+    ".config/fontconfig/fonts.conf" = {
+      source  = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/fontconfig/.config/fontconfig";
+      recursive = true;
+    };
   };
 
   home.sessionVariables = {
@@ -73,7 +77,7 @@
     userEmail = "arcidiaco.a@gmail.com";
   };
   
-  fonts.fontconfig.enable = true;
+  fonts.fontconfig.enable = lib.mkForce false;
   
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

@@ -77,7 +77,6 @@
   services.xserver.displayManager.gdm.enable = false;
   services.xserver.desktopManager.gnome.enable = false;
   services.displayManager.sessionPackages = [hyprland.packages.${pkgs.system}.hyprland];
-  #programs.hyprland.enable = true;
   
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -164,15 +163,12 @@
     fastfetch
     swww.packages.${pkgs.system}.swww
     google-chrome
+    hyprpanel.packages.${pkgs.system}.hyprpanel
   ];
   # Hyprland installation and configuration from unstable version from flake.nix (the oldest hypr pkg is in the nixpkgs repo, the latest is in the flake input) 
   programs.hyprland = {
     enable = true;
     package = hyprland.packages.${pkgs.system}.hyprland;
-  };
-  programs.hyprpanel = {
-    enable = true;
-    package = hyprpanel.packages.${pkgs.system}.hyprpanel;
   };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

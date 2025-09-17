@@ -1,14 +1,9 @@
 {
   "custom/arch-script": {
-    "icon": "󰣇",
+    "icon": "",
     "label": "",
-    "execute": "/home/aa/.local/bin/aa",
-    "tooltip": "Esegui script aa",
     "executeOnAction": "/home/$US",
     "interval": 0,
-    "hideOnEmpty": false,
-    "actions": {
-      "onLeftClick": "/home/aa/.local/bin/aa"
-    }
+    "hideOnEmpty": false
   }
 }
