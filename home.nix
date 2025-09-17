@@ -18,6 +18,11 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
+    nerd-fonts.agave
+    nerd-fonts.jetbrains-mono
+    inter-nerdfont
+    nerd-fonts.noto
+    dejavu_fonts
     (writeShellScriptBin "aa" (builtins.readFile ./aa.sh) )
   ];
 
@@ -60,10 +65,11 @@
       source  = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/zsh/.zshrc";
       recursive = true;
     };
-    ".config/fontconfig/fonts.conf" = {
-      source  = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/fontconfig/.config/fontconfig";
-      recursive = true;
-    };
+    #".config/fontconfig" = {
+    #
+    #source  = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/fontconfig/.config/fontconfig";
+    #  recursive = true;
+    #};
   };
 
   home.sessionVariables = {
@@ -76,8 +82,16 @@
     userName = "alearcy";
     userEmail = "arcidiaco.a@gmail.com";
   };
-  
-  fonts.fontconfig.enable = lib.mkForce false;
+  fonts = {
+    fontconfig = {
+       enable = true;
+       defaultFonts = {
+	 serif = ["NotoSerif Nerd Font Propo"];
+	 sansSerif = ["NotoSans Nerd Font Propo"];
+	 monospace = ["Agave Nerd Font Mono" "Iosevska Nerd Font Mono"];
+       };
+    };
+  };
   
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
