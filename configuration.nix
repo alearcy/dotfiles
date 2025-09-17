@@ -66,17 +66,17 @@
     LC_TIME = "it_IT.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     open = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
-  # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = false;
   services.xserver.desktopManager.gnome.enable = false;
-  services.displayManager.sessionPackages = [hyprland.packages.${pkgs.system}.hyprland];
+  services.xserver.displayManager.lightdm.enable = false;
+  #services.displayManager.sessionPackages = [hyprland.packages.${pkgs.system}.hyprland];
+  programs.dconf.enable = true;
+  
   
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -142,10 +142,6 @@
     firefox
     emacs
     neovim
-    nerd-fonts.agave
-    nerd-fonts.jetbrains-mono
-    inter-nerdfont
-    nerd-fonts.noto
     ripgrep
     yazi
     lazygit
@@ -155,16 +151,24 @@
     lazydocker
     helix
     hyprlock
-    hyprpanel
     btop
-    dejavu_fonts
     kitty
     fuzzel
     fastfetch
     swww.packages.${pkgs.system}.swww
     google-chrome
     hyprpanel.packages.${pkgs.system}.hyprpanel
+    glib #gsettings
+    # Pacchetti necessari per gli schemi gsettings
+    gsettings-desktop-schemas  # Schemi base di GNOME/GTK
+    gtk3                       # Librerie GTK3
+    gtk4                       # Librerie GTK4 (se usi app che le richiedono)
   ];
+
+  environment.variables = {
+    GSETTINGS_SCHEMA_DIR = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas";
+  };
+  
   # Hyprland installation and configuration from unstable version from flake.nix (the oldest hypr pkg is in the nixpkgs repo, the latest is in the flake input) 
   programs.hyprland = {
     enable = true;
