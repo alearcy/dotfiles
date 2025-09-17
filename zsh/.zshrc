@@ -13,7 +13,6 @@ alias md="mkdir -p"
 alias rd="rm -rf"
 alias grep="rg"
 alias ls="eza -la --icons=always"
-alias hx="helix"
 alias tree="eza -T --git-ignore --icons"
 alias cat="bat"
 alias sudohx='EDITOR=helix sudoedit'
