@@ -19,7 +19,7 @@
   };
 
   outputs = { self, nixpkgs, home-manager, hyprland, swww, hyprpanel, ... } @inputs: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.nixaa = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit hyprland swww hyprpanel; };
         system = "x86_64-linux";
         modules = [
